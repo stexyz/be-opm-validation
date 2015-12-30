@@ -29,6 +29,7 @@ namespace opm_validation_service.Services {
         /// </summary>
         /// <param name="codeString"></param>
         /// <returns></returns>
+        [Obsolete("Use the version with token.")]
         public OpmVerificationResult VerifyOpm(string codeString) {
             EanEicCode code = new EanEicCode(codeString);
             return Verify(code);
@@ -38,7 +39,7 @@ namespace opm_validation_service.Services {
         {
             if (!IdentityManagement.ValidateUser(token))
             {
-                return null;
+                throw new UnauthorizedAccessException("Access denied due to invalid token.");
             }
 
             IUser userInfo = IdentityManagement.GetUserInfo(token);

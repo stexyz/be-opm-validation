@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -30,7 +31,18 @@ namespace opm_validation_service.Controllers
         }
 
         public OpmVerificationResult Get(String id, String token) {
-            return _opmVerificator.VerifyOpm(id, token);
+            try
+            {
+                return _opmVerificator.VerifyOpm(id, token);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                    {
+                        Content = new StringContent("Access denied due to invalid token.")
+                    };
+                throw new HttpResponseException(msg);
+            }
         }
     }
 }

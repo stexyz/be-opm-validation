@@ -5,12 +5,12 @@ namespace opm_validation_service.Tests.Services {
     [TestFixture]
     public class IdentityManagementTest {
         //TODO SP: use Unity to setup tests
+        readonly string _idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
 
         [Test]
         public void BasicImTest() {
-            string idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
 
-            IdentityManagement im = new IdentityManagement(idmUrl);
+            IdentityManagement im = new IdentityManagement(_idmUrl);
 
             string token = im.Login("t5734", "Lcii9lvy");
             const string badToken = "AAABB123123123DFSDFsdfsdf123123dsfsdf123SDFSDF4.*AAJTSQACMDE.*";
