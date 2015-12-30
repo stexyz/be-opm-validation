@@ -41,6 +41,9 @@ namespace opm_validation_service {
             IOpmRepository opmInMemoryRepository = new OpmInMemoryRepository();
             OpmRepoFiller.Fill(opmInMemoryRepository);
             container.RegisterInstance(opmInMemoryRepository);
+
+            IUserAccessService userAccessService = new UserAccessMockService();
+            container.RegisterInstance(userAccessService);
             
             config.DependencyResolver = new UnityResolver(container);
 #endregion IoC

@@ -133,7 +133,9 @@
     <Compile Include="Models\CheckResult.cs" />
     <Compile Include="Models\EanEicCode.cs" />
     <Compile Include="Models\Opm.cs" />
+    <Compile Include="Persistence\OpmDbRepository.cs" />
     <Compile Include="Persistence\OpmRepoFiller.cs" />
+    <Compile Include="Services\UserAccessMockService.cs" />
     <None Include="Persistence\OpmRepoSampleData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -147,10 +149,11 @@
     <Compile Include="Services\IUser.cs" />
     <Compile Include="Persistence\IUserLimitRepository.cs" />
     <Compile Include="Persistence\OpmInMemoryRepository.cs" />
+    <Compile Include="Services\IUserAccessService.cs" />
     <Compile Include="Services\OpmVerificator.cs" />
     <Compile Include="Services\UnityResolver.cs" />
     <Compile Include="Services\User.cs" />
-    <Compile Include="Persistence\UserLimitRepository.cs" />
+    <Compile Include="Persistence\UserLimitInMemoryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

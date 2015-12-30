@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using opm_validation_service.Models;
 using opm_validation_service.Services;
@@ -18,9 +21,11 @@ namespace opm_validation_service.Controllers
         {
             _opmVerificator = opmVerificator;
         }
-
+        
         public OpmVerificationResult Get(String id)
         {
+            CookieHeaderValue token = Request.Headers.GetCookies("iPlanetDirectoryPro").FirstOrDefault();
+            //TODO SP: pass the token cookie to the verifyOpmCall or return 401
             return _opmVerificator.VerifyOpm(id);
         }
 

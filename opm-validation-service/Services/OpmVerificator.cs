@@ -6,17 +6,19 @@ namespace opm_validation_service.Services {
 
     public class OpmVerificator : IOpmVerificator
     {
-        public OpmVerificator(IIdentityManagement identityManagement, IEanEicCheckerHttpClient eanEicCheckerHttpClient, IOpmRepository opmRepository)
+        public OpmVerificator(IIdentityManagement identityManagement, IEanEicCheckerHttpClient eanEicCheckerHttpClient, IOpmRepository opmRepository, IUserAccessService userAccessService)
         {
             IdentityManagement = identityManagement;
             EanEicCheckerHttpClient = eanEicCheckerHttpClient;
             OpmRepository = opmRepository;
+            UserAccessService = userAccessService;
         }
 
         //BEANS:
         public IIdentityManagement IdentityManagement { private get; set; }
         public IEanEicCheckerHttpClient EanEicCheckerHttpClient { private get; set; }
         public IOpmRepository OpmRepository { private get; set; }
+        public IUserAccessService UserAccessService { private get; set; }
 
         /// <summary>
         /// TODO SP: 
@@ -32,8 +34,21 @@ namespace opm_validation_service.Services {
             return Verify(code);
         }
 
-        public OpmVerificationResult VerifyOpm(string codeString, string token) {
-            throw new System.NotImplementedException();
+        public OpmVerificationResult VerifyOpm(string codeString, string token)
+        {
+            if (!IdentityManagement.ValidateUser(token))
+            {
+                return null;
+            }
+
+            IUser userInfo = IdentityManagement.GetUserInfo(token);
+
+            if (UserAccessService.TryAccess(userInfo))
+            {
+                return VerifyOpm(codeString);
+            }
+
+            throw new UnauthorizedAccessException("Access denied due to access limit violation.");
         }
 
         private OpmVerificationResult Verify(EanEicCode code) {

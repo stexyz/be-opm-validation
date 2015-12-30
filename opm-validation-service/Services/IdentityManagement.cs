@@ -5,8 +5,6 @@ using System.Security.Authentication;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {
-        //TODO SP: constructor injection of URI
-
         private readonly Uri _ssoUrl;
         public IdentityManagement(string idmEndPoint)
         {
@@ -26,21 +24,18 @@ namespace opm_validation_service.Services {
             }
         }
 
-        private string HttpGet(string restOfUri, string token = "") {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_ssoUrl + restOfUri);
-            request.Method = "GET";
-            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-            request.CookieContainer = new CookieContainer();
-            if (token != "") {
-                Cookie c = new Cookie("iPlanetDirectoryPro", token);
-                c.Domain = _ssoUrl.Host;
-                request.CookieContainer.Add(c);
-            }
-            Stream responseStream = request.GetResponse().GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-            return reader.ReadToEnd();
-        }
 
+        public string Login(string userName, string password) {
+            string validationString = HttpGet("authenticate?username=" + userName + "&password=" + password);
+
+            string[] validationResult = validationString.Split("=".ToCharArray());
+
+            if (validationResult[0] == "token.id") {
+                return validationResult[1];
+            }
+            throw new AuthenticationException("Login failed.");
+        }
+        
         public IUser GetUserInfo(string token) {
             try {
                 string userInfoString = HttpGet("attributes", token);
@@ -69,17 +64,18 @@ namespace opm_validation_service.Services {
             throw new Exception();
         }
 
-        public string Login(string userName, string password)
-        {
-            string validationString = HttpGet("authenticate?username=" + userName + "&password=" + password);
-
-            string[] validationResult = validationString.Split("=".ToCharArray());
-
-            if (validationResult[0] == "token.id")
-            {
-                return validationResult[1];
+        private string HttpGet(string restOfUri, string token = "") {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_ssoUrl + restOfUri);
+            request.Method = "GET";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            request.CookieContainer = new CookieContainer();
+            if (token != "") {
+                Cookie c = new Cookie("iPlanetDirectoryPro", token) {Domain = _ssoUrl.Host};
+                request.CookieContainer.Add(c);
             }
-            throw new AuthenticationException("Login failed.");
+            Stream responseStream = request.GetResponse().GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+            return reader.ReadToEnd();
         }
     }
 }
