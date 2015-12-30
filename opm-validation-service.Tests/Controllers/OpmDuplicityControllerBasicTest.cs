@@ -29,9 +29,13 @@ namespace opm_validation_service.Tests.Controllers {
         public void SetUp()
         {
             Mock<IEanEicCheckerHttpClient> mockClient = new Mock<IEanEicCheckerHttpClient>();
-            //TODO SP: for code "invalid" return CheckResultCode.EanInvalidCheckCharacter
-            
-            mockClient.Setup(c => c.Post(It.IsAny<EanEicCode>())).Returns(new CheckResult(CheckResultCode.EanOk));
+            //for "invalid" ean code returns invalid, ean ok otherwise
+            mockClient.Setup(c => c.Post(It.IsAny<EanEicCode>()))
+                      .Returns(
+                          (EanEicCode code) =>
+                          code.Code == "invalid"
+                              ? new CheckResult(CheckResultCode.EanInvalidCheckCharacter)
+                              : new CheckResult(CheckResultCode.EanOk));
 
             IOpmRepository opmRepository = new OpmInMemoryRepository();
             OpmRepoFiller.Fill(opmRepository, PositiveTestData);
@@ -63,19 +67,31 @@ namespace opm_validation_service.Tests.Controllers {
             TestUsingExternalData(true, "valid");
         }
 
-//        [Test]
-        //TODO SP: use for E2E test or 
+        [Test]
         public void Get_Returns_400_For_Wrong_Code()
         {
             try {
-                // set the sso token (mock takes 'valid' as valid)
-                _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=valid");
-                OpmVerificationResult result = _controller.Get("invalid");
+                _controller.Get("invalid", "valid");
             } catch (HttpResponseException e) {
                 Assert.AreEqual(HttpStatusCode.BadRequest, e.Response.StatusCode);
                 return;
             }
             Assert.Fail("Test failed. Expected HTTP Status Code 400."); 
+        }
+
+        [Test]
+        public void Get_Returns_400_For_Wrong_Code_With_Cookie() {
+            try
+            {
+                // set the sso token (mock takes 'valid' as valid)
+                _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=valid");
+                _controller.Get("invalid");
+            }
+            catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.BadRequest, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 400.");
         }
 
         [Test]
