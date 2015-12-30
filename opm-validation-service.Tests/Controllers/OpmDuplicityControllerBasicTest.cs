@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -14,6 +15,7 @@ namespace opm_validation_service.Tests.Controllers {
 
     /// <summary>
     /// Tests only that the logic works without auth and user access limits.
+    /// Two token values with some meaning - "valid" and "depleated".
     /// </summary>
     [TestFixture]
     public class OpmDuplicityControllerBasicTest
@@ -27,13 +29,16 @@ namespace opm_validation_service.Tests.Controllers {
         public void SetUp()
         {
             Mock<IEanEicCheckerHttpClient> mockClient = new Mock<IEanEicCheckerHttpClient>();
+            //TODO SP: for code "invalid" return CheckResultCode.EanInvalidCheckCharacter
+            
             mockClient.Setup(c => c.Post(It.IsAny<EanEicCode>())).Returns(new CheckResult(CheckResultCode.EanOk));
 
             IOpmRepository opmRepository = new OpmInMemoryRepository();
-
             OpmRepoFiller.Fill(opmRepository, PositiveTestData);
+
             Mock<IUserAccessService> userAccessServiceMock = new Mock<IUserAccessService>();
-            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>())).Returns(true);
+            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>())).Returns((IUser u) => u .Id != "depleated");
+            
             IIdentityManagement identityManagement = new IdentityManagementMock();
             IOpmVerificator opmVerificator = new OpmVerificator(identityManagement, mockClient.Object, opmRepository, userAccessServiceMock.Object);
 
@@ -121,6 +126,31 @@ namespace opm_validation_service.Tests.Controllers {
                 return;
             }
             Assert.Fail("Test failed. Expected HTTP Status Code 401.");
+        }
+        
+        [Test]
+        public void Get_Returns_403_For_Depleated_User()
+        {
+            try {
+                _controller.Get("Anything..", "depleated");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Forbidden, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 403.");
+        }
+
+        [Test]
+        public void Get_Returns_403_For_Depleated_User_Cookie_Version()
+        {
+            try {
+                _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=depleated");
+                _controller.Get("Anything..");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Forbidden, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 403.");
         }
 
         private void TestUsingExternalData(bool isPositive, string token) {

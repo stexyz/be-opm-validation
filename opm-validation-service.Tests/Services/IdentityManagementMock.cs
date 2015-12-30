@@ -4,18 +4,21 @@ namespace opm_validation_service.Tests.Services {
     public class IdentityManagementMock : IIdentityManagement {
         public bool ValidateUser(string token)
         {
-            return token == "valid";
+            return token == "valid" || token == "depleated";
         }
 
         public IUser GetUserInfo(string token)
         {
-            return token == "valid" ? new User("valid") : null;
+            if (token == "valid" || token == "depleated")
+            {
+                return new User(token);
+            }
+            return null;
         }
 
         public string Login(string userName, string password)
         {
-            return userName == "valid" && password == "valid" ? "valid" : null;
-
+            throw new System.NotImplementedException();
         }
     }
 }
