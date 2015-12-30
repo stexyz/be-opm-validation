@@ -24,7 +24,6 @@ namespace opm_validation_service.Services {
             }
         }
 
-
         public string Login(string userName, string password) {
             string validationString = HttpGet("authenticate?username=" + userName + "&password=" + password);
 

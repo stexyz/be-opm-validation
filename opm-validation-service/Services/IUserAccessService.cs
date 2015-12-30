@@ -8,5 +8,9 @@
         /// <param name="user">User</param>
         /// <returns>True if there is some limit left. False otherwise.</returns>
         bool TryAccess(IUser user);
+
+        //TODO SP:
+        // string GetAccessLogs();
+        // string GetAccessLogs(IUser user);
     }
 }

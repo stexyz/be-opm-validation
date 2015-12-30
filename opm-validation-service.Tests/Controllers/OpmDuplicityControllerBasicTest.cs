@@ -19,6 +19,7 @@ namespace opm_validation_service.Tests.Controllers {
     public class OpmDuplicityControllerBasicTest
     {
         private OpmDuplicityController _controller;
+        private readonly string _ssoCookieName = System.Configuration.ConfigurationManager.AppSettings["ssoCookieName"];
         private const string PositiveTestData = "OpmRepoSampleData.csv";
         private const string NegativeTestData = "OpmRepoSampleNegativeData.csv";
 
@@ -44,30 +45,97 @@ namespace opm_validation_service.Tests.Controllers {
         }
 
         [Test]
-        public void Get()
+        public void Get_With_Valid_Token_In_Uri()
         {
-            TestUsingExternalData(false, null);
-            TestUsingExternalData(true, null);
+            TestUsingExternalDataWithTokenAsUriParam(false, "valid");
+            TestUsingExternalDataWithTokenAsUriParam(true, "valid");
         }
 
         [Test]
-        public void Get_Returns_401_For_Wrong_Token()
+        public void Get_With_Valid_Token_In_Cookie()
         {
             TestUsingExternalData(false, "valid");
             TestUsingExternalData(true, "valid");
-            try
-            {
-                TestUsingExternalData(false, "invalid");
+        }
+
+//        [Test]
+        //TODO SP: use for E2E test or 
+        public void Get_Returns_400_For_Wrong_Code()
+        {
+            try {
+                // set the sso token (mock takes 'valid' as valid)
+                _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=valid");
+                OpmVerificationResult result = _controller.Get("invalid");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.BadRequest, e.Response.StatusCode);
+                return;
             }
-            catch (HttpResponseException e)
-            {
-                Assert.AreEqual(e.Response.StatusCode, HttpStatusCode.Unauthorized);
+            Assert.Fail("Test failed. Expected HTTP Status Code 400."); 
+        }
+
+        [Test]
+        public void Get_Returns_401_For_Wrong_Cookie_Token() {
+            try {
+                // set the sso token (mock takes 'valid' as valid)
+                _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=NotValidToken");
+                OpmVerificationResult result = _controller.Get("invalid");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Unauthorized, e.Response.StatusCode);
                 return;
             }
             Assert.Fail("Test failed. Expected HTTP Status Code 401.");
         }
 
-        private void TestUsingExternalData(bool isPositive, string token)
+        [Test]
+        public void Get_Returns_401_For_Wrong_Token() {
+            TestUsingExternalDataWithTokenAsUriParam(false, "valid");
+            TestUsingExternalDataWithTokenAsUriParam(true, "valid");
+            try {
+                TestUsingExternalDataWithTokenAsUriParam(false, "invalid");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Unauthorized, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 401.");
+        }
+
+        [Test]
+        public void Get_Returns_401_For_Missing_Cookie_Token()
+        {
+            try {
+                // no cookie set
+                _controller.Get("Anything..");
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Unauthorized, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 401.");
+        }
+
+        [Test]
+        public void Get_Returns_401_For_Null_Token() {
+            try {
+                _controller.Get("Anything..", null);
+            } catch (HttpResponseException e) {
+                Assert.AreEqual(HttpStatusCode.Unauthorized, e.Response.StatusCode);
+                return;
+            }
+            Assert.Fail("Test failed. Expected HTTP Status Code 401.");
+        }
+
+        private void TestUsingExternalData(bool isPositive, string token) {
+            string path = isPositive ? PositiveTestData : NegativeTestData;
+            using (StreamReader sr = new StreamReader(path)) {
+                string currentLine;
+                while ((currentLine = sr.ReadLine()) != null)
+                {
+                    _controller.Request.Headers.Add("Cookie", _ssoCookieName + "=" + token);
+                    Assert.IsFalse(_controller.Get(currentLine).Result ^ isPositive);
+                }
+            }
+        }
+
+        private void TestUsingExternalDataWithTokenAsUriParam(bool isPositive, string token)
         {
             string path = isPositive ? PositiveTestData : NegativeTestData;
             using (StreamReader sr = new StreamReader(path))
@@ -75,14 +143,7 @@ namespace opm_validation_service.Tests.Controllers {
                 string currentLine;
                 while ((currentLine = sr.ReadLine()) != null)
                 {
-                    if (token != null)
-                    {
-                        Assert.IsFalse(_controller.Get(currentLine, token).Result ^ isPositive);
-                    }
-                    else
-                    {
-                        Assert.IsFalse(_controller.Get(currentLine).Result ^ isPositive);
-                    }
+                    Assert.IsFalse(_controller.Get(currentLine, token).Result ^ isPositive);
                 }
             }
         }

@@ -5,16 +5,11 @@ namespace opm_validation_service.Services
     public interface IOpmVerificator
     {
         /// <summary>
-        /// TODO SP: 
-        /// 1) this call needs to be parameterized with some token or user identification to limit # of cals per user 
-        ///   a. what to do if the EAN/EIC is invalid 
-        ///   b. what to do if the user has already queried system too many times
-        /// 2) create service that will keep track of # calls to the API for a particular user
+        /// What to do if the EAN/EIC is invalid 
         /// </summary>
         /// <param name="codeString"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        OpmVerificationResult VerifyOpm(string codeString);
-
         OpmVerificationResult VerifyOpm(string codeString, string token);
     }
 }

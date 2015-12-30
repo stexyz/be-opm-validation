@@ -1,4 +1,5 @@
 ﻿using System;
+using opm_validation_service.Exceptions;
 using opm_validation_service.Models;
 using opm_validation_service.Persistence;
 
@@ -22,15 +23,11 @@ namespace opm_validation_service.Services {
 
         /// <summary>
         /// TODO SP: 
-        /// 1) this call needs to be parameterized with some token or user identification to limit # of cals per user 
         ///   a. what to do if the EAN/EIC is invalid 
-        ///   b. what to do if the user has already queried system too many times
-        /// 2) create service that will keep track of # calls to the API for a particular user
         /// </summary>
         /// <param name="codeString"></param>
         /// <returns></returns>
-        [Obsolete("Use the version with token.")]
-        public OpmVerificationResult VerifyOpm(string codeString) {
+        private OpmVerificationResult VerifyOpm(string codeString) {
             EanEicCode code = new EanEicCode(codeString);
             return Verify(code);
         }
@@ -49,14 +46,13 @@ namespace opm_validation_service.Services {
                 return VerifyOpm(codeString);
             }
 
-            throw new UnauthorizedAccessException("Access denied due to access limit violation.");
+            throw new UserAccessLimitViolationException();
         }
 
         private OpmVerificationResult Verify(EanEicCode code) {
             CheckResult codeValid = EanEicCheckerHttpClient.Post(code);
             if (codeValid.ResultCode != CheckResultCode.EanOk && codeValid.ResultCode != CheckResultCode.EicOk) {
-                //TODO SP: what to do now - maybe better to just return 'false'
-                throw new ArgumentException("The supplied code is not valid." + "\n" + codeValid.Description);
+                throw new EanEicCodeInvalidException();
             }
 
             //OK, code is valid, try to find it in the OpmRepository

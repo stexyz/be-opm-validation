@@ -138,6 +138,8 @@
     <Compile Include="Models\Opm.cs" />
     <Compile Include="Persistence\OpmDbRepository.cs" />
     <Compile Include="Persistence\OpmRepoFiller.cs" />
+    <Compile Include="Exceptions\EanEicCodeInvalidException.cs" />
+    <Compile Include="Exceptions\UserAccessLimitViolationException.cs" />
     <None Include="Persistence\OpmRepoSampleData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
