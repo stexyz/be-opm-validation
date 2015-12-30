@@ -2,7 +2,7 @@
 
 //TODO SP: implement
 namespace opm_validation_service.Persistence {
-
+    //TODO SP: thread-safe!!!
     public class OpmDbRepository : IOpmRepository
     {
         public bool TryGetOpm(EanEicCode code, out Opm opmForCode)

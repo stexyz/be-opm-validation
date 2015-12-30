@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
 using opm_validation_service.Persistence;
@@ -39,7 +40,8 @@ namespace opm_validation_service {
 
           
             IOpmRepository opmInMemoryRepository = new OpmInMemoryRepository();
-            OpmRepoFiller.Fill(opmInMemoryRepository);
+            string path = HttpContext.Current.Server.MapPath("Persistence/OpmRepoSampleData.csv");
+            OpmRepoFiller.Fill(opmInMemoryRepository, path);
             container.RegisterInstance(opmInMemoryRepository);
 
             IUserAccessService userAccessService = new UserAccessMockService();

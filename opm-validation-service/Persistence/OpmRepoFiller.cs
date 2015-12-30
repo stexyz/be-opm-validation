@@ -21,9 +21,9 @@ namespace opm_validation_service.Persistence
                 "859182400892331768", "859182400892333694", "859182400893009819", "859182400893014134"
             };
 
-        public static void Fill(IOpmRepository repo)
+        public static void Fill(IOpmRepository repo, string path)
         {
-            using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath("Persistence/OpmRepoSampleData.csv")))
+            using (StreamReader sr = new StreamReader(path))
             {
                 string currentLine;
                 while ((currentLine = sr.ReadLine()) != null)

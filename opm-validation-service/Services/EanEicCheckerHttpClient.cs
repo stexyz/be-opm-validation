@@ -6,7 +6,7 @@ using System.Web.Script.Serialization;
 using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
-    class EanEicCheckerHttpClient : IEanEicCheckerHttpClient {
+    public class EanEicCheckerHttpClient : IEanEicCheckerHttpClient {
         private readonly Uri uri;
         private readonly JavaScriptSerializer javaScriptSerializer;
 

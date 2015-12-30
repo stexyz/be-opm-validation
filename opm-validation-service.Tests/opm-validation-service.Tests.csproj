@@ -116,7 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\OpmDuplicityControllerTest.cs" />
+    <Compile Include="Controllers\OpmDuplicityControllerBasicTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityManagementTest.cs" />
     <Compile Include="Peristence\OpmRepositoryTest.cs" />
@@ -125,6 +125,9 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OpmRepoSampleData.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

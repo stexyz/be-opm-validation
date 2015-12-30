@@ -8,7 +8,9 @@ namespace opm_validation_service.Tests.Services {
 
         [Test]
         public void BasicImTest() {
-            IdentityManagement im = new IdentityManagement("https://am-proxytest.bohemiaenergy.cz/opensso/identity/");
+            string idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
+
+            IdentityManagement im = new IdentityManagement(idmUrl);
 
             string token = im.Login("t5734", "Lcii9lvy");
             const string badToken = "AAABB123123123DFSDFsdfsdf123123dsfsdf123SDFSDF4.*AAJTSQACMDE.*";
