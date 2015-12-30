@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
+using Moq;
 using opm_validation_service.Persistence;
 using opm_validation_service.Services;
 
@@ -44,8 +45,10 @@ namespace opm_validation_service {
             OpmRepoFiller.Fill(opmInMemoryRepository, path);
             container.RegisterInstance(opmInMemoryRepository);
 
-            IUserAccessService userAccessService = new UserAccessMockService();
-            container.RegisterInstance(userAccessService);
+            //TODO SP: unmock
+            Mock<IUserAccessService> userAccessServiceMock = new Mock<IUserAccessService>();
+            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>())).Returns(true);
+            container.RegisterInstance(userAccessServiceMock.Object);
             
             config.DependencyResolver = new UnityResolver(container);
 #endregion IoC

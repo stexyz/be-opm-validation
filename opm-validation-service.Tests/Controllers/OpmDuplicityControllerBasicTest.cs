@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
+using Moq;
 using NUnit.Framework;
 using opm_validation_service.Controllers;
 using opm_validation_service.Models;
@@ -25,17 +25,16 @@ namespace opm_validation_service.Tests.Controllers {
         [SetUp]
         public void SetUp()
         {
-            string eanEicCheckerUrl = System.Configuration.ConfigurationManager.AppSettings["EanEicCheckerUrl"];
-            //TODO SP: mock with moq!!
-            IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient(eanEicCheckerUrl);
+            Mock<IEanEicCheckerHttpClient> mockClient = new Mock<IEanEicCheckerHttpClient>();
+            mockClient.Setup(c => c.Post(It.IsAny<EanEicCode>())).Returns(new CheckResult(CheckResultCode.EanOk));
 
             IOpmRepository opmRepository = new OpmInMemoryRepository();
 
             OpmRepoFiller.Fill(opmRepository, PositiveTestData);
-
-            IUserAccessService userAccessService = new UserAccessMockService();
+            Mock<IUserAccessService> userAccessServiceMock = new Mock<IUserAccessService>();
+            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>())).Returns(true);
             IIdentityManagement identityManagement = new IdentityManagementMock();
-            IOpmVerificator opmVerificator = new OpmVerificator(identityManagement, eanEicCheckerHttpClient, opmRepository, userAccessService);
+            IOpmVerificator opmVerificator = new OpmVerificator(identityManagement, mockClient.Object, opmRepository, userAccessServiceMock.Object);
 
             _controller = new OpmDuplicityController(opmVerificator)
                 {

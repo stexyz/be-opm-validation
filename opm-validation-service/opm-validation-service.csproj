@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Caching" />
@@ -135,7 +138,6 @@
     <Compile Include="Models\Opm.cs" />
     <Compile Include="Persistence\OpmDbRepository.cs" />
     <Compile Include="Persistence\OpmRepoFiller.cs" />
-    <Compile Include="Services\UserAccessMockService.cs" />
     <None Include="Persistence\OpmRepoSampleData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
