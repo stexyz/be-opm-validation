@@ -18,8 +18,7 @@ namespace opm_validation_service.Controllers
         /// </summary>
         private readonly IOpmVerificator _opmVerificator;
 
-        private readonly string ssoCookieName = System.Configuration.ConfigurationManager.AppSettings["ssoCookieName"];
-
+        private readonly string _ssoCookieName = System.Configuration.ConfigurationManager.AppSettings["ssoCookieName"];
 
         public OpmDuplicityController(IOpmVerificator opmVerificator)
         {
@@ -28,15 +27,12 @@ namespace opm_validation_service.Controllers
         
         public OpmVerificationResult Get(String id)
         {
-            CookieHeaderValue token = Request.Headers.GetCookies(ssoCookieName).FirstOrDefault();
+            CookieHeaderValue token = Request.Headers.GetCookies(_ssoCookieName).FirstOrDefault();
             if (token == null)
             {
-                HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.Unauthorized) {
-                    Content = new StringContent("Access denied due to invalid token.")
-                };
-                throw new HttpResponseException(msg);
+                ThrowHttpResponseException(HttpStatusCode.Unauthorized, "Access denied due to invalid token.");
             }
-            return Get(id, token[ssoCookieName].Value);
+            return Get(id, token[_ssoCookieName].Value);
         }
 
         public OpmVerificationResult Get(String id, String token) {
@@ -46,28 +42,28 @@ namespace opm_validation_service.Controllers
             }
             catch (UnauthorizedAccessException)
             {
-                HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.Unauthorized)
-                    {
-                        Content = new StringContent("Access denied due to invalid token.")
-                    };
-                throw new HttpResponseException(msg);
+                ThrowHttpResponseException(HttpStatusCode.Unauthorized, "Access denied due to an invalid token.");
             }
             catch (UserAccessLimitViolationException)
             {
-                HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.Forbidden)
-                    {
-                        Content = new StringContent("Access denied due to access limit violation.")
-                    };
-                throw new HttpResponseException(msg);
+                ThrowHttpResponseException(HttpStatusCode.Forbidden, "Access denied due to access limit violation.");
             }
             catch (EanEicCodeInvalidException)
             {
-                HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                    {
-                        Content = new StringContent("The supplied code is not valid.")
-                    };
-                throw new HttpResponseException(msg);
+                ThrowHttpResponseException(HttpStatusCode.BadRequest, "The supplied code is not valid.");
             }
+            // this return statement is required by compiler; prefer to have it here rather than inline the ThrowHttpResponseException method
+            return null;
+        }
+
+        // ApiController will wrap the exception to the http status code and message
+        private static void ThrowHttpResponseException(HttpStatusCode statusCode, string content)
+        {
+            HttpResponseMessage msg = new HttpResponseMessage(statusCode)
+                {
+                    Content = new StringContent(content)
+                };
+            throw new HttpResponseException(msg);
         }
     }
 }

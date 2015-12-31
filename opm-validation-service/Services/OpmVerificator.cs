@@ -21,32 +21,23 @@ namespace opm_validation_service.Services {
         public IOpmRepository OpmRepository { private get; set; }
         public IUserAccessService UserAccessService { private get; set; }
 
-        /// <summary>
-        /// TODO SP: 
-        ///   a. what to do if the EAN/EIC is invalid 
-        /// </summary>
-        /// <param name="codeString"></param>
-        /// <returns></returns>
-        private OpmVerificationResult VerifyOpm(string codeString) {
-            EanEicCode code = new EanEicCode(codeString);
-            return Verify(code);
-        }
-
-        public OpmVerificationResult VerifyOpm(string codeString, string token)
-        {
-            if (!IdentityManagement.ValidateUser(token))
-            {
-                throw new UnauthorizedAccessException("Access denied due to invalid token.");
+        public OpmVerificationResult VerifyOpm(string codeString, string token) {
+            if (!IdentityManagement.ValidateUser(token)) {
+                throw new UnauthorizedAccessException();
             }
 
             IUser userInfo = IdentityManagement.GetUserInfo(token);
 
-            if (UserAccessService.TryAccess(userInfo))
-            {
+            if (UserAccessService.TryAccess(userInfo)) {
                 return VerifyOpm(codeString);
             }
 
             throw new UserAccessLimitViolationException();
+        }
+
+        private OpmVerificationResult VerifyOpm(string codeString) {
+            EanEicCode code = new EanEicCode(codeString);
+            return Verify(code);
         }
 
         private OpmVerificationResult Verify(EanEicCode code) {
@@ -55,7 +46,7 @@ namespace opm_validation_service.Services {
                 throw new EanEicCodeInvalidException();
             }
 
-            //OK, code is valid, try to find it in the OpmRepository
+            //OK, code is valid, try to find the record in the OpmRepository
             Opm opmForCode;
             if (OpmRepository.TryGetOpm(code, out opmForCode)) {
                 return new OpmVerificationResult(true);
