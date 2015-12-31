@@ -5,6 +5,7 @@ using opm_validation_service.Persistence;
 
 namespace opm_validation_service.Services {
 
+    //TODO SP: verificator or verifier or some other better name
     public class OpmVerificator : IOpmVerificator
     {
         public OpmVerificator(IIdentityManagement identityManagement, IEanEicCheckerHttpClient eanEicCheckerHttpClient, IOpmRepository opmRepository, IUserAccessService userAccessService)

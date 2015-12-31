@@ -1,4 +1,4 @@
-﻿namespace opm_validation_service.Services
+﻿namespace opm_validation_service.Models
 {
     public class User : IUser{
         public User(string id)

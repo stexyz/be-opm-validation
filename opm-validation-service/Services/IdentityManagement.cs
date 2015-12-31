@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Security.Authentication;
+using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {

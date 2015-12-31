@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
 using Moq;
+using opm_validation_service.Models;
 using opm_validation_service.Persistence;
 using opm_validation_service.Services;
 

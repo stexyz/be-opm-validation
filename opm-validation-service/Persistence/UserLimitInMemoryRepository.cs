@@ -1,4 +1,5 @@
-﻿using opm_validation_service.Services;
+﻿using opm_validation_service.Models;
+using opm_validation_service.Services;
 
 namespace opm_validation_service.Persistence
 {

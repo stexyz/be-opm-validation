@@ -9,6 +9,8 @@ namespace opm_validation_service.Tests.Peristence {
 
         readonly EanEicCode _validCode = new EanEicCode("859182400123456789");
 
+        //TODO SP: use this test to test the DB repo as well.
+
         [Test]
         public void CrudTest() {
             _repository.TryAdd(new Opm(_validCode));

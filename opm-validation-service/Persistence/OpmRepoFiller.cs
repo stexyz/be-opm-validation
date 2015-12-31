@@ -9,6 +9,7 @@ namespace opm_validation_service.Persistence
 {
     public static class OpmRepoFiller
     {
+        [Obsolete]
         private static readonly string[] Input = new[]
             {
                 "859182400204379570", "859182400210288910", "859182400206514634", "859182400204081893",

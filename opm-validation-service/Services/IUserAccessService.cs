@@ -1,4 +1,6 @@
-﻿namespace opm_validation_service.Services {
+﻿using opm_validation_service.Models;
+
+namespace opm_validation_service.Services {
     public interface IUserAccessService
     {
         /// <summary>

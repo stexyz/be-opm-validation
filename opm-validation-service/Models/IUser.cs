@@ -1,4 +1,4 @@
-﻿namespace opm_validation_service.Services
+﻿namespace opm_validation_service.Models
 {
     public interface IUser {
         // temporaty user (identity)
