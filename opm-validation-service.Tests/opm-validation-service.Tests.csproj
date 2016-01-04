@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\OpmDuplicityControllerBasicTest.cs" />
+    <Compile Include="Peristence\OpmDbRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityManagementMock.cs" />
     <Compile Include="Services\IdentityManagementTest.cs" />

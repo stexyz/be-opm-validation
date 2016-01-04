@@ -48,12 +48,15 @@
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.DurableInstancing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -129,6 +132,21 @@
     <Compile Include="CheckResultDescriptions.Designer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpmDuplicityController.cs" />
+    <Compile Include="Persistence\ORM\OpmDb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpmDb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\ORM\OpmDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpmDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\ORM\OpmDb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpmDb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpmVerificationResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -136,10 +154,30 @@
     <Compile Include="Models\CheckResult.cs" />
     <Compile Include="Models\EanEicCode.cs" />
     <Compile Include="Models\Opm.cs" />
+    <Compile Include="Persistence\ORM\tbl_duplicate_opms.cs">
+      <DependentUpon>OpmDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\OpmDbRepository.cs" />
     <Compile Include="Persistence\OpmRepoFiller.cs" />
     <Compile Include="Exceptions\EanEicCodeInvalidException.cs" />
     <Compile Include="Exceptions\UserAccessLimitViolationException.cs" />
+    <EntityDeploy Include="Persistence\ORM\OpmDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OpmDb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Persistence\ORM\OpmDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OpmDb.edmx</DependentUpon>
+      <LastGenOutput>OpmDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Persistence\ORM\OpmDb.edmx.diagram">
+      <DependentUpon>OpmDb.edmx</DependentUpon>
+    </Content>
+    <Content Include="Persistence\ORM\OpmDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OpmDb.edmx</DependentUpon>
+      <LastGenOutput>OpmDb.cs</LastGenOutput>
+    </Content>
     <None Include="Persistence\OpmRepoSampleData.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -243,7 +281,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -280,6 +320,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CheckResultDescriptions.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
