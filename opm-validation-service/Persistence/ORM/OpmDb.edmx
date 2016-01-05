@@ -4,9 +4,10 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OpmModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OpmModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="OpmModelStoreContainer">
           <EntitySet Name="tbl_duplicate_opms" EntityType="OpmModel.Store.tbl_duplicate_opms" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_user_access_log" EntityType="OpmModel.Store.tbl_user_access_log" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
         <EntityType Name="tbl_duplicate_opms">
           <Key>
@@ -17,13 +18,22 @@
           <Property Name="tdo_ean" Type="varchar" MaxLength="50" />
           <Property Name="tdo_is_opm_duplicate" Type="bit" Nullable="false" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityType Name="tbl_user_access_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="tdo_user_id" Type="nchar" Nullable="false" MaxLength="40" />
+          <Property Name="tdo_access_time" Type="datetime" Nullable="false" />
+          <Property Name="tdo_ean" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OpmModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BE_Opm" p1:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_duplicate_opms" EntityType="OpmModel.tbl_duplicate_opms" />
+          <EntitySet Name="tbl_user_access_log" EntityType="OpmModel.tbl_user_access_log" />
         </EntityContainer>
         <EntityType Name="tbl_duplicate_opms">
           <Key>
@@ -33,6 +43,15 @@
           <Property Name="tdo_cp_id" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="tdo_ean" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="tdo_is_opm_duplicate" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_user_access_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="tdo_user_id" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Type="DateTime" Name="tdo_access_time" Precision="3" Nullable="false" />
+          <Property Type="String" Name="tdo_ean" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -47,6 +66,16 @@
                 <ScalarProperty Name="tdo_cp_id" ColumnName="tdo_cp_id" />
                 <ScalarProperty Name="tdo_ean" ColumnName="tdo_ean" />
                 <ScalarProperty Name="tdo_is_opm_duplicate" ColumnName="tdo_is_opm_duplicate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user_access_log">
+            <EntityTypeMapping TypeName="OpmModel.tbl_user_access_log">
+              <MappingFragment StoreEntitySet="tbl_user_access_log">
+                <ScalarProperty Name="tdo_ean" ColumnName="tdo_ean" />
+                <ScalarProperty Name="tdo_access_time" ColumnName="tdo_access_time" />
+                <ScalarProperty Name="tdo_user_id" ColumnName="tdo_user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

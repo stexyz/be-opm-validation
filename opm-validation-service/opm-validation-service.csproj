@@ -132,6 +132,7 @@
     <Compile Include="CheckResultDescriptions.Designer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpmDuplicityController.cs" />
+    <Compile Include="Persistence\IUserAccessRecord.cs" />
     <Compile Include="Persistence\ORM\OpmDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +162,11 @@
     <Compile Include="Persistence\OpmRepoFiller.cs" />
     <Compile Include="Exceptions\EanEicCodeInvalidException.cs" />
     <Compile Include="Exceptions\UserAccessLimitViolationException.cs" />
+    <Compile Include="Persistence\ORM\tbl_user_access_log.cs">
+      <DependentUpon>OpmDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\UserAccessRecord.cs" />
+    <Compile Include="Services\UserAccessService.cs" />
     <EntityDeploy Include="Persistence\ORM\OpmDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OpmDb.Designer.cs</LastGenOutput>
@@ -189,13 +195,13 @@
     <Compile Include="Persistence\IOpmRepository.cs" />
     <Compile Include="Services\IOpmVerificator.cs" />
     <Compile Include="Models\IUser.cs" />
-    <Compile Include="Persistence\IUserLimitRepository.cs" />
+    <Compile Include="Persistence\IUserAccessRepository.cs" />
     <Compile Include="Persistence\OpmInMemoryRepository.cs" />
     <Compile Include="Services\IUserAccessService.cs" />
     <Compile Include="Services\OpmVerificator.cs" />
     <Compile Include="Services\UnityResolver.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Persistence\UserLimitInMemoryRepository.cs" />
+    <Compile Include="Persistence\UserAccessInMemoryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -26,5 +26,6 @@ namespace opm_validation_service.Persistence.ORM
         }
     
         public DbSet<tbl_duplicate_opms> tbl_duplicate_opms { get; set; }
+        public DbSet<tbl_user_access_log> tbl_user_access_log { get; set; }
     }
 }

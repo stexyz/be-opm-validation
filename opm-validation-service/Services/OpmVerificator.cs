@@ -29,15 +29,15 @@ namespace opm_validation_service.Services {
 
             IUser userInfo = IdentityManagement.GetUserInfo(token);
 
-            if (UserAccessService.TryAccess(userInfo)) {
-                return VerifyOpm(codeString);
+            EanEicCode code = new EanEicCode(codeString);
+            if (UserAccessService.TryAccess(userInfo, code)) {
+                return VerifyOpm(code);
             }
 
             throw new UserAccessLimitViolationException();
         }
 
-        private OpmVerificationResult VerifyOpm(string codeString) {
-            EanEicCode code = new EanEicCode(codeString);
+        private OpmVerificationResult VerifyOpm(EanEicCode code) {
             return Verify(code);
         }
 

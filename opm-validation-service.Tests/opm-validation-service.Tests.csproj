@@ -119,7 +119,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\OpmDuplicityControllerAccessLimitTest.cs" />
     <Compile Include="Controllers\OpmDuplicityControllerBasicTest.cs" />
+    <Compile Include="Controllers\OpmDuplicityControllerTestBase.cs" />
+    <Compile Include="Peristence\UserAccessInMemoryRepositoryTest.cs" />
     <Compile Include="Peristence\OpmDbRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityManagementMock.cs" />

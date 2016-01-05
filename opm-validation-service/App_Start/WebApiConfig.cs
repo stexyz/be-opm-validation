@@ -48,7 +48,7 @@ namespace opm_validation_service {
 
             //TODO SP: unmock
             Mock<IUserAccessService> userAccessServiceMock = new Mock<IUserAccessService>();
-            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>())).Returns(true);
+            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>(), It.IsAny<EanEicCode>())).Returns(true);
             container.RegisterInstance(userAccessServiceMock.Object);
             
             config.DependencyResolver = new UnityResolver(container);
