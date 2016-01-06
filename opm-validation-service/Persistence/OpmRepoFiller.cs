@@ -29,7 +29,10 @@ namespace opm_validation_service.Persistence
                 string currentLine;
                 while ((currentLine = sr.ReadLine()) != null)
                 {
-                    repo.TryAdd(new Opm(new EanEicCode(currentLine)));
+                    if (!repo.TryAdd(new Opm(new EanEicCode(currentLine))))
+                    {
+                        throw new Exception("Failed to add OPM [code= " + currentLine + "] to repository.");
+                    }
                 }
             }
         }

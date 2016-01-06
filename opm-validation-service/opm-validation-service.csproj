@@ -147,6 +147,8 @@
     <Compile Include="CheckResultDescriptions.Designer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpmDuplicityController.cs" />
+    <Compile Include="Persistence\DbRepositoryUtil.cs" />
+    <Compile Include="Persistence\UserAccessDbRepository.cs" />
     <Compile Include="Persistence\IUserAccessRecord.cs" />
     <Compile Include="Persistence\ORM\OpmDb.Context.cs">
       <AutoGen>True</AutoGen>

@@ -8,6 +8,13 @@ namespace opm_validation_service.Tests.Peristence {
     {
         private readonly IOpmRepository _repository = new OpmDbRepository();
 
+        [SetUp]
+        public void Setup()
+        {
+            DbRepositoryUtil.RecreateDatabase();
+            DbRepositoryUtil.FillSampleOpm();
+        }
+
         [Test]
         public void GetTest()
         {

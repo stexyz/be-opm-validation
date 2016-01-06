@@ -43,28 +43,56 @@ namespace opm_validation_service.Tests.Controllers
         [Test]
         public void Get_Returns_403_After_User_Limit_Is_Depleated()
         {
+            Test_Get_Until_Depleated("valid", false);
+        }
+
+        [Test]
+        public void Get_Still_Works_For_Another_User_After_Ones_User_Limit_Is_Depleated()
+        {
+            Test_Get_Until_Depleated("valid", false);
+            Test_Get_Until_Depleated("valid2", false);
+        }
+
+        [Test]
+        public void Get_Returns_403_After_User_Limit_Is_Depleated_Cookie() {
+            Test_Get_Until_Depleated("valid", true);
+        }
+
+        [Test]
+        public void Get_Still_Works_For_Another_User_After_Ones_User_Limit_Is_Depleated_Cookie() {
+            Test_Get_Until_Depleated("valid", true);
+            Test_Get_Until_Depleated("valid2", true);
+        }
+
+        private void Test_Get_Until_Depleated(string token, bool cookieVersion) {
             // the limit is 5, so all 5 calls have to pass
-            for (int i = 0; i < MaxUserLimit; i++ ) {
-                Controller.Get("Anything..", "valid");
+            for (int i = 0; i < MaxUserLimit; i++)
+            {
+                ControllerGet(cookieVersion, token);
             }
 
-            try
-            {
+            try {
                 // the 6th call should fail with HTTP 403
-                Controller.Get("Anything..", "valid");
-            }
-            catch (HttpResponseException e)
-            {
+                ControllerGet(cookieVersion, token);
+            } catch (HttpResponseException e) {
                 Assert.AreEqual(HttpStatusCode.Forbidden, e.Response.StatusCode);
                 return;
             }
             Assert.Fail("Test failed. Expected HTTP Status Code 403.");
         }
 
-        [Test]
-        public void Get_Still_Works_For_Another_User_After_Ones_User_Limit_Is_Depleated()
+        private void ControllerGet(bool withCookie, string token)
         {
-            throw new NotImplementedException("TODO SP.");
+            if (withCookie)
+            {
+                Controller.Request.Headers.Remove("Cookie");
+                Controller.Request.Headers.Add("Cookie", SsoCookieName + "=" + token);
+                Controller.Get("Anything");
+            }
+            else
+            {
+                Controller.Get("Anything", token);
+            }
         }
     }
 }

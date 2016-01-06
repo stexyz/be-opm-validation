@@ -39,6 +39,10 @@
     <OutputPath>bin\Deploy-DevServer\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\opm-validation-service\bin\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq">
@@ -120,7 +124,9 @@
     <Compile Include="Controllers\OpmDuplicityControllerAccessLimitTest.cs" />
     <Compile Include="Controllers\OpmDuplicityControllerBasicTest.cs" />
     <Compile Include="Controllers\OpmDuplicityControllerTestBase.cs" />
+    <Compile Include="Peristence\UserAccessDbRepositoryTest.cs" />
     <Compile Include="Peristence\UserAccessInMemoryRepositoryTest.cs" />
+    <Compile Include="Peristence\UserAccessRepositoryTestBase.cs" />
     <Compile Include="Peristence\OpmDbRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityManagementMock.cs" />

@@ -10,6 +10,10 @@ namespace opm_validation_service.Persistence
 
         public int GetUserAccessCount(IUser user, TimeSpan timeWindow)
         {
+            if (user == null) {
+                throw new ArgumentException("User cannot be null.");
+            }
+
             if (!store.ContainsKey(user.Id))
             {
                 return 0;
@@ -20,6 +24,14 @@ namespace opm_validation_service.Persistence
 
         public void RecordAccess(IUser user, EanEicCode code)
         {
+            if (user == null)
+            {
+                throw new ArgumentException("User cannot be null.");
+            }
+            if (code == null) {
+                throw new ArgumentException("Code cannot be null.");
+            }
+
             if (!store.ContainsKey(user.Id))
             {
                 store[user.Id] = new List<IUserAccessRecord>();

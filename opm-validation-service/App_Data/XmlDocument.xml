@@ -468,6 +468,26 @@
             1) expose https endpoint (configurable in Web.config)
             </summary>
         </member>
+        <member name="T:opm_validation_service.Persistence.UserAccessDbRepository">
+            <summary>
+            Repo for user access limits
+            </summary>
+        </member>
+        <member name="M:opm_validation_service.Persistence.UserAccessDbRepository.GetUserAccessCount(opm_validation_service.Models.IUser,System.TimeSpan)">
+            <summary>
+            Returns number of access records in the specified time window (from now).
+            </summary>
+            <param name="user">User to get records for.</param>
+            <param name="timeWindow">Timespan until when to count records.</param>
+            <returns>Count of valid records.</returns>
+        </member>
+        <member name="M:opm_validation_service.Persistence.OpmDbRepository.TryAdd(opm_validation_service.Models.Opm)">
+            <summary>
+            Tries to add a new opm record to DB.
+            </summary>
+            <param name="opm">Opm to add.</param>
+            <returns>True if addition had suceeded.</returns>
+        </member>
         <member name="M:opm_validation_service.Services.IUserAccessService.TryAccess(opm_validation_service.Models.IUser,opm_validation_service.Models.EanEicCode)">
             <summary>
             Synchronized method. Tries to access resource. If successful, the internal counter gets increased.

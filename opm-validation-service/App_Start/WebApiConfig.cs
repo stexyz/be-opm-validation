@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
-using Moq;
-using opm_validation_service.Models;
 using opm_validation_service.Persistence;
 using opm_validation_service.Services;
 
@@ -31,7 +26,6 @@ namespace opm_validation_service {
             var container = new UnityContainer();
             container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
 
-
             string idmUrl = System.Configuration.ConfigurationManager.AppSettings["IdmUrl"];
             IIdentityManagement idm = new IdentityManagement(idmUrl);
             container.RegisterInstance(idm);
@@ -43,10 +37,11 @@ namespace opm_validation_service {
             IOpmRepository opmRepository = new OpmDbRepository();
             container.RegisterInstance(opmRepository);
 
+            IUserAccessRepository userAccessRepository = new UserAccessDbRepository();
 
             int maxUserLimit = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxUserLimit"]);
             int userLimitTimeWindownInSeconds = int.Parse(System.Configuration.ConfigurationManager.AppSettings["UserLimitTimeWindownInSeconds"]);
-            IUserAccessService userAccessService = new UserAccessService(new UserAccessInMemoryRepository(), new TimeSpan(0, 0, 0, userLimitTimeWindownInSeconds), maxUserLimit);
+            IUserAccessService userAccessService = new UserAccessService(userAccessRepository, new TimeSpan(0, 0, 0, userLimitTimeWindownInSeconds), maxUserLimit);
             container.RegisterInstance(userAccessService);
             
             config.DependencyResolver = new UnityResolver(container);
