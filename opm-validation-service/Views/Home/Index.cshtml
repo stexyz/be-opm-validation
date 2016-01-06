@@ -11,8 +11,6 @@
         </div>
     </section>
     <section class="content-wrapper main-content clear-fix">
-        @Html.ActionLink("API", "Index", "Help", new { area = "" }, null)
-
         <form id="validateEanEicForm" method="post">
             <h3>Validate OPM Eligibility</h3>
             <p>
@@ -27,6 +25,7 @@
         <p id="result"></p>
         <label for="tokenHint">To obtain a valid token follow this link:</label>
         <a href="https://am-proxytest.bohemiaenergy.cz/opensso/identity/authenticate?username=t5734&password=Lcii9lvy">https://am-proxytest.bohemiaenergy.cz/opensso/identity/authenticate?username=t5734&password=Lcii9lvy</a>
+        <p><strong>Example data:</strong> Valid EAN present in DB: 859182400100447106. Valid EAN not present in DB: 859182400741757329</p>
     </section>
 </div>
 
