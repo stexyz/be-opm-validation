@@ -39,11 +39,9 @@
                     data: 'token=' + $("#tokenInputId").val(),
                     success: function(data) {
                         $('#result').text(JSON.stringify(data));
-                        alert('successful');
                     },
                     error: function (xhr, status, error) {
                         $('#result').text("HTTP status: " + xhr.status + ", " + xhr.responseText);
-                        alert(xhr.responseText);
                     }
                 }
             );

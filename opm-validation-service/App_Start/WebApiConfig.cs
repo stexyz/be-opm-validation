@@ -40,16 +40,14 @@ namespace opm_validation_service {
             IEanEicCheckerHttpClient eanEicCheckerHttpClient = new EanEicCheckerHttpClient(eanEicCheckerUrl);
             container.RegisterInstance(eanEicCheckerHttpClient);
 
-          
-            IOpmRepository opmInMemoryRepository = new OpmInMemoryRepository();
-            string path = HttpContext.Current.Server.MapPath("Persistence/OpmRepoSampleData.csv");
-            OpmRepoFiller.Fill(opmInMemoryRepository, path);
-            container.RegisterInstance(opmInMemoryRepository);
+            IOpmRepository opmRepository = new OpmDbRepository();
+            container.RegisterInstance(opmRepository);
 
-            //TODO SP: unmock
-            Mock<IUserAccessService> userAccessServiceMock = new Mock<IUserAccessService>();
-            userAccessServiceMock.Setup(m => m.TryAccess(It.IsAny<IUser>(), It.IsAny<EanEicCode>())).Returns(true);
-            container.RegisterInstance(userAccessServiceMock.Object);
+
+            int maxUserLimit = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxUserLimit"]);
+            int userLimitTimeWindownInSeconds = int.Parse(System.Configuration.ConfigurationManager.AppSettings["UserLimitTimeWindownInSeconds"]);
+            IUserAccessService userAccessService = new UserAccessService(new UserAccessInMemoryRepository(), new TimeSpan(0, 0, 0, userLimitTimeWindownInSeconds), maxUserLimit);
+            container.RegisterInstance(userAccessService);
             
             config.DependencyResolver = new UnityResolver(container);
 #endregion IoC
