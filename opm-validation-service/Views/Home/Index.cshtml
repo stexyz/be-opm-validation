@@ -17,6 +17,8 @@
             <p>
                 <label for="code">EAN/EIC code of the OPM:</label>
                 <input type="text" name="code" id="codeInputId"/>
+                <label for="code">IDM Token:</label>
+                <input type="text" name="token" id="tokenInputId"/>
             </p>
             <input type="button" id="validateCodeButton" value="Validate" />
         </form>
@@ -24,3 +26,25 @@
         <p id="result"></p>
     </section>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#validateCodeButton').click(function() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/api/OpmDuplicity/' + $("#codeInputId").val(),
+                    data: 'token=' + $("#tokenInputId").val(),
+                    success: function(data) {
+                        $('#result').text(JSON.stringify(data));
+                        alert('successful');
+                    },
+                    error: function (xhr, status, error) {
+                        $('#result').text("HTTP status: " + xhr.status + ", " + xhr.responseText);
+                        alert(xhr.responseText);
+                    }
+                }
+            );
+        });
+    </script>
+}
