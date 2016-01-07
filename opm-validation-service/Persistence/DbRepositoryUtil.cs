@@ -1,7 +1,6 @@
-﻿using opm_validation_service.Persistence;
-using opm_validation_service.Persistence.ORM;
+﻿using opm_validation_service.Persistence.ORM;
 
-namespace opm_validation_service.Tests.Peristence
+namespace opm_validation_service.Persistence
 {
     public static class DbRepositoryUtil
     {
@@ -16,10 +15,10 @@ namespace opm_validation_service.Tests.Peristence
             context.Database.Create();
         }
 
-        public static void FillSampleOpm()
+        public static void FillSampleOpm(string path)
         {
             IOpmRepository repo = new OpmDbRepository();
-            OpmRepoFiller.Fill(repo, PositiveTestData);
+            OpmRepoFiller.Fill(repo, path);
         }
     }
 }

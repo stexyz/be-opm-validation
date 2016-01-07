@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
 using opm_validation_service.Persistence;
@@ -23,6 +24,15 @@ namespace opm_validation_service {
             config.EnableSystemDiagnosticsTracing();
 
 #region IoC
+            bool recreateDatabase = Boolean.Parse(System.Configuration.ConfigurationManager.AppSettings["RecreateDatabase"]);
+
+            if (recreateDatabase)
+            {
+                DbRepositoryUtil.RecreateDatabase();
+                String pathToSampleData = HttpContext.Current.Server.MapPath("~/Persistence/OpmRepoSampleData.csv");
+                DbRepositoryUtil.FillSampleOpm(pathToSampleData);
+            }
+
             var container = new UnityContainer();
             container.RegisterType<IOpmVerificator, OpmVerificator>(new HierarchicalLifetimeManager());
 

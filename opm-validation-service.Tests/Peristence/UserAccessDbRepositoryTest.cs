@@ -5,7 +5,7 @@ namespace opm_validation_service.Tests.Peristence
     public class UserAccessDbRepositoryTest : UserAccessRepositoryTestBase {
         protected override IUserAccessRepository CreateRepository() {
             DbRepositoryUtil.RecreateDatabase();
-            DbRepositoryUtil.FillSampleOpm();
+            DbRepositoryUtil.FillSampleOpm("OpmRepoSampleData.csv");
             return new UserAccessDbRepository();
         }
     }

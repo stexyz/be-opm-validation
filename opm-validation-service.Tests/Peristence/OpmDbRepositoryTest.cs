@@ -7,7 +7,7 @@ namespace opm_validation_service.Tests.Peristence
         protected override IOpmRepository GetOpmRepository()
         {
             DbRepositoryUtil.RecreateDatabase();
-            DbRepositoryUtil.FillSampleOpm();
+            DbRepositoryUtil.FillSampleOpm("OpmRepoSampleData.csv");
             return new OpmDbRepository();
         }
     }
