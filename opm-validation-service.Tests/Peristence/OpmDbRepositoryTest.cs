@@ -1,26 +1,14 @@
-﻿using NUnit.Framework;
-using opm_validation_service.Models;
-using opm_validation_service.Persistence;
+﻿using opm_validation_service.Persistence;
 
-namespace opm_validation_service.Tests.Peristence {
-    [TestFixture]
-    public class OpmDbRepositoryTest
+namespace opm_validation_service.Tests.Peristence
+{
+    public class OpmDbRepositoryTest : OpmRepositoryTestBase
     {
-        private readonly IOpmRepository _repository = new OpmDbRepository();
-
-        [SetUp]
-        public void Setup()
+        protected override IOpmRepository GetOpmRepository()
         {
             DbRepositoryUtil.RecreateDatabase();
             DbRepositoryUtil.FillSampleOpm();
-        }
-
-        [Test]
-        public void GetTest()
-        {
-            Opm opm;
-            Assert.IsTrue(_repository.TryGetOpm(new EanEicCode("859182400205312606"), out opm));
-            Assert.AreEqual("859182400205312606", opm.Code.Code);
+            return new OpmDbRepository();
         }
     }
 }

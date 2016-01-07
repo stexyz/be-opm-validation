@@ -18,7 +18,6 @@ namespace opm_validation_service.Tests.Controllers
     [TestFixture]
     public class OpmDuplicityControllerAccessLimitTest : OpmDuplicityControllerTestBase
     {
-        //TODO SP: add the "cookie version" get() tests
         private const int MaxUserLimit = 5;
 
         [SetUp]

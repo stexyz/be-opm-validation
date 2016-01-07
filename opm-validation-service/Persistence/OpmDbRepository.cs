@@ -1,26 +1,26 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using opm_validation_service.Models;
 using opm_validation_service.Persistence.ORM;
 
-//TODO SP: implement
 namespace opm_validation_service.Persistence {
-    //TODO SP: thread-safe!!!
     public class OpmDbRepository : IOpmRepository
     {
         readonly BE_Opm _dbContext = new BE_Opm();
 
         public bool TryGetOpm(EanEicCode code, out Opm opmForCode)
         {
-            tbl_duplicate_opms dbOpm = _dbContext.tbl_duplicate_opms.SingleOrDefault(o => o.tdo_ean.Equals(code.Code));
-            if (dbOpm != null)
+            try
             {
+                tbl_duplicate_opms dbOpm =
+                    _dbContext.tbl_duplicate_opms.SingleOrDefault(o => o.tdo_ean.Equals(code.Code));
                 opmForCode = new Opm(new EanEicCode(dbOpm.tdo_ean));
                 return true;
             }
-            opmForCode = null;
-            return false;
+            catch
+            {
+                opmForCode = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -32,10 +32,6 @@ namespace opm_validation_service.Persistence {
         {
             try
             {
-                if (opm == null)
-                {
-                    return false;
-                }
                 tbl_duplicate_opms newRecord = new tbl_duplicate_opms
                     {
                         tdo_cp_id = 0,
@@ -47,7 +43,7 @@ namespace opm_validation_service.Persistence {
                 _dbContext.SaveChanges();
                 return true;
             }
-            catch(Exception)
+            catch
             {
                 return false;
             }
@@ -55,7 +51,18 @@ namespace opm_validation_service.Persistence {
 
         public bool TryRemoveOpm(EanEicCode code)
         {
-            throw new System.NotImplementedException();
+            try {
+                tbl_duplicate_opms entityToRemove = _dbContext.tbl_duplicate_opms.FirstOrDefault(opm => opm.tdo_ean.Equals(code.Code));
+                if (entityToRemove == null)
+                {
+                    return false;
+                }
+                _dbContext.tbl_duplicate_opms.Remove(entityToRemove);
+                _dbContext.SaveChanges();
+                return true;
+            } catch {
+                return false;
+            }
         }
     }
 }
