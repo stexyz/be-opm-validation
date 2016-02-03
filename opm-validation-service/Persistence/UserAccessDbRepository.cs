@@ -13,23 +13,23 @@ namespace opm_validation_service.Persistence
         /// <summary>
         /// Returns number of access records in the specified time window (from now).
         /// </summary>
-        /// <param name="user">User to get records for.</param>
+        /// <param name="username">User to get records for.</param>
         /// <param name="timeWindow">Timespan until when to count records.</param>
         /// <returns>Count of valid records.</returns>
-        public int GetUserAccessCount(IUser user, TimeSpan timeWindow)
+        public int GetUserAccessCount(string username, TimeSpan timeWindow)
         {
-            if (user == null) {
+            if (username == null) {
                 throw new ArgumentException("User cannot be null.");
             }
             DateTime beginningOfTimeWindow = DateTime.UtcNow.Subtract(timeWindow);
-            IQueryable<tbl_user_access_log> dbUserAccessRecords = _dbContext.tbl_user_access_log.Where(l => l.tdo_user_id.Equals(user.Id) &&
+            IQueryable<tbl_user_access_log> dbUserAccessRecords = _dbContext.tbl_user_access_log.Where(l => l.tdo_user_id.Equals(username) &&
                                                                                                             l.tdo_access_time > beginningOfTimeWindow);
             return dbUserAccessRecords.Count();
         }
 
-        public void RecordAccess(IUser user, EanEicCode code)
+        public void RecordAccess(string username, EanEicCode code)
         {
-            if (user == null) {
+            if (username == null) {
                 throw new ArgumentException("User cannot be null.");
             }
             if (code == null) {
@@ -38,7 +38,7 @@ namespace opm_validation_service.Persistence
 
             tbl_user_access_log newRecord = new tbl_user_access_log
                 {
-                    tdo_user_id = user.Id,
+                    tdo_user_id = username,
                     tdo_ean = code.Code,
                     tdo_access_time = DateTime.UtcNow
                 };

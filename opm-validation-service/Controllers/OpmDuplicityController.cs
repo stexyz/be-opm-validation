@@ -10,19 +10,16 @@ using opm_validation_service.Services;
 
 namespace opm_validation_service.Controllers
 {
-    public class OpmDuplicityController : ApiController
+    public class OpmDuplicityController : AbstractOpmDuplicityController
     {
         /// <summary>
         /// TODO SP: 
         /// 1) expose https endpoint (configurable in Web.config)
         /// </summary>
-        private readonly IOpmVerificator _opmVerificator;
-
         private readonly string _ssoCookieName = System.Configuration.ConfigurationManager.AppSettings["ssoCookieName"];
 
-        public OpmDuplicityController(IOpmVerificator opmVerificator)
+        public OpmDuplicityController(IOpmVerificator opmVerificator) : base(opmVerificator)
         {
-            _opmVerificator = opmVerificator;
         }
         
         public OpmVerificationResult Get(String id)
@@ -38,7 +35,7 @@ namespace opm_validation_service.Controllers
         public OpmVerificationResult Get(String id, String token) {
             try
             {
-                return _opmVerificator.VerifyOpm(id, token);
+                return _opmVerificator.VerifyOpmWithToken(id, token);
             }
             catch (UnauthorizedAccessException)
             {
@@ -54,16 +51,6 @@ namespace opm_validation_service.Controllers
             }
             // this return statement is required by compiler; prefer to have it here rather than inline the ThrowHttpResponseException method
             return null;
-        }
-
-        // ApiController will wrap the exception to the http status code and message
-        private static void ThrowHttpResponseException(HttpStatusCode statusCode, string content)
-        {
-            HttpResponseMessage msg = new HttpResponseMessage(statusCode)
-                {
-                    Content = new StringContent(content)
-                };
-            throw new HttpResponseException(msg);
         }
     }
 }

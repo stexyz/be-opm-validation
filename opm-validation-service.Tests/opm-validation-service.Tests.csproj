@@ -135,7 +135,9 @@
     <Compile Include="Peristence\OpmRepositoryTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="OpmRepoSampleData.csv">

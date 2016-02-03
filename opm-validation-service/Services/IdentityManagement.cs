@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Security.Authentication;
-using opm_validation_service.Models;
 
 namespace opm_validation_service.Services {
     public class IdentityManagement : IIdentityManagement {
@@ -36,10 +35,10 @@ namespace opm_validation_service.Services {
             throw new AuthenticationException("Login failed.");
         }
         
-        public IUser GetUserInfo(string token) {
+        public string GetUsername(string token) {
             try {
                 string userInfoString = HttpGet("attributes", token);
-                return createUser(userInfoString);
+                return getUsernameFromAttributeList(userInfoString);
             } catch (WebException ex) {
                 HttpStatusCode statusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 if (statusCode == HttpStatusCode.Unauthorized) {
@@ -49,7 +48,7 @@ namespace opm_validation_service.Services {
             }
         }
 
-        private IUser createUser(string userInfoString)
+        private string getUsernameFromAttributeList(string userInfoString)
         {
             bool uidRead = false;
             foreach (string s in userInfoString.Split("\n".ToCharArray()))
@@ -57,7 +56,7 @@ namespace opm_validation_service.Services {
                 if (uidRead)
                 {
                     string uid = s.Split("=".ToCharArray())[1];
-                    return new User(uid);
+                    return uid;
                 }
                 uidRead = (s == "userdetails.attribute.name=uid");
             }

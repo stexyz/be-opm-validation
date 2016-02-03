@@ -19,15 +19,15 @@ namespace opm_validation_service.Tests.Services {
             bool userValid = im.ValidateUser(badToken);
             Assert.IsFalse(userValid);
 
-            IUser user = im.GetUserInfo(badToken);
-            Assert.IsNull(user);
+            string username = im.GetUsername(badToken);
+            Assert.IsNull(username);
 
             userValid = im.ValidateUser(token);
             Assert.IsTrue(userValid);
 
-            IUser user2 = im.GetUserInfo(token);
-            Assert.NotNull(user2);
-            Assert.AreEqual(user2.Id, "t5734");
+            string username2 = im.GetUsername(token);
+            Assert.NotNull(username2);
+            Assert.AreEqual(username2, "t5734");
         }
     }
 }

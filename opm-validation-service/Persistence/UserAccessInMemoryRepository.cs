@@ -8,23 +8,23 @@ namespace opm_validation_service.Persistence
     public class UserAccessInMemoryRepository: IUserAccessRepository{
         private readonly Dictionary<string, List<IUserAccessRecord>> store = new Dictionary<string ,List<IUserAccessRecord>>();
 
-        public int GetUserAccessCount(IUser user, TimeSpan timeWindow)
+        public int GetUserAccessCount(string username, TimeSpan timeWindow)
         {
-            if (user == null) {
+            if (username == null) {
                 throw new ArgumentException("User cannot be null.");
             }
 
-            if (!store.ContainsKey(user.Id))
+            if (!store.ContainsKey(username))
             {
                 return 0;
             }
-            int result = store[user.Id].Count(r => r.AccessTime > DateTime.Now.Subtract(timeWindow));
+            int result = store[username].Count(r => r.AccessTime > DateTime.Now.Subtract(timeWindow));
             return result;
         }
 
-        public void RecordAccess(IUser user, EanEicCode code)
+        public void RecordAccess(string username, EanEicCode code)
         {
-            if (user == null)
+            if (username == null)
             {
                 throw new ArgumentException("User cannot be null.");
             }
@@ -32,11 +32,11 @@ namespace opm_validation_service.Persistence
                 throw new ArgumentException("Code cannot be null.");
             }
 
-            if (!store.ContainsKey(user.Id))
+            if (!store.ContainsKey(username))
             {
-                store[user.Id] = new List<IUserAccessRecord>();
+                store[username] = new List<IUserAccessRecord>();
             }
-            store[user.Id].Add(new UserAccessRecord(user.Id, DateTime.Now, code));
+            store[username].Add(new UserAccessRecord(username, DateTime.Now, code));
         }
     }
 }

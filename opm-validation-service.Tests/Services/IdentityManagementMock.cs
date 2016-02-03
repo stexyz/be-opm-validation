@@ -8,11 +8,11 @@ namespace opm_validation_service.Tests.Services {
             return token == "valid" || token == "valid2" || token == "depleated";
         }
 
-        public IUser GetUserInfo(string token)
+        public string GetUsername(string token)
         {
             if (token == "valid" || token == "valid2" || token == "depleated")
             {
-                return new User(token);
+                return token;
             }
             return null;
         }

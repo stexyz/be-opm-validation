@@ -1,6 +1,4 @@
-﻿using opm_validation_service.Models;
-
-namespace opm_validation_service.Services
+﻿namespace opm_validation_service.Services
 {
     public interface IIdentityManagement {
         /// <summary>
@@ -15,7 +13,7 @@ namespace opm_validation_service.Services
         /// </summary>
         /// <param name="token">Token to get info for.</param>
         /// <returns>Info about user.</returns>
-        IUser GetUserInfo(string token);
+        string GetUsername(string token);
 
         /// <summary>
         /// Acquires token from IDM (OpenSSO).

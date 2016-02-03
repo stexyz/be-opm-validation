@@ -7,10 +7,10 @@ namespace opm_validation_service.Services {
         /// Synchronized method. Tries to access resource. If successful, the internal counter gets increased.
         /// This service also maintains access logs.
         /// </summary>
-        /// <param name="user">User</param>
+        /// <param name="username">User</param>
         /// <param name="code"></param>
         /// <returns>True if there is some limit left. False otherwise.</returns>
-        bool TryAccess(IUser user, EanEicCode code);
+        bool TryAccess(string username, EanEicCode code);
 
         //TODO SP:
         // string GetAccessLogs();

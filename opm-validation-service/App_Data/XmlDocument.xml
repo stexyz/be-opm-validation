@@ -462,7 +462,7 @@
               Looks up a localized string similar to No code supplied..
             </summary>
         </member>
-        <member name="F:opm_validation_service.Controllers.OpmDuplicityController._opmVerificator">
+        <member name="F:opm_validation_service.Controllers.OpmDuplicityController._ssoCookieName">
             <summary>
             TODO SP: 
             1) expose https endpoint (configurable in Web.config)
@@ -473,11 +473,11 @@
             Repo for user access limits
             </summary>
         </member>
-        <member name="M:opm_validation_service.Persistence.UserAccessDbRepository.GetUserAccessCount(opm_validation_service.Models.IUser,System.TimeSpan)">
+        <member name="M:opm_validation_service.Persistence.UserAccessDbRepository.GetUserAccessCount(System.String,System.TimeSpan)">
             <summary>
             Returns number of access records in the specified time window (from now).
             </summary>
-            <param name="user">User to get records for.</param>
+            <param name="username">User to get records for.</param>
             <param name="timeWindow">Timespan until when to count records.</param>
             <returns>Count of valid records.</returns>
         </member>
@@ -488,12 +488,12 @@
             <param name="opm">Opm to add.</param>
             <returns>True if addition had suceeded.</returns>
         </member>
-        <member name="M:opm_validation_service.Services.IUserAccessService.TryAccess(opm_validation_service.Models.IUser,opm_validation_service.Models.EanEicCode)">
+        <member name="M:opm_validation_service.Services.IUserAccessService.TryAccess(System.String,opm_validation_service.Models.EanEicCode)">
             <summary>
             Synchronized method. Tries to access resource. If successful, the internal counter gets increased.
             This service also maintains access logs.
             </summary>
-            <param name="user">User</param>
+            <param name="username">User</param>
             <param name="code"></param>
             <returns>True if there is some limit left. False otherwise.</returns>
         </member>
@@ -504,7 +504,7 @@
             <param name="token">Token to validate.</param>
             <returns>True if token is valid and not expired.</returns>
         </member>
-        <member name="M:opm_validation_service.Services.IIdentityManagement.GetUserInfo(System.String)">
+        <member name="M:opm_validation_service.Services.IIdentityManagement.GetUsername(System.String)">
             <summary>
             Queries IDM (OpenSSO) to retrieve information about user from the given token.
             </summary>
@@ -518,14 +518,6 @@
             <param name="userName">username</param>
             <param name="password">password</param>
             <returns>Token.</returns>
-        </member>
-        <member name="M:opm_validation_service.Services.IOpmVerificator.VerifyOpm(System.String,System.String)">
-            <summary>
-            What to do if the EAN/EIC is invalid 
-            </summary>
-            <param name="codeString"></param>
-            <param name="token"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

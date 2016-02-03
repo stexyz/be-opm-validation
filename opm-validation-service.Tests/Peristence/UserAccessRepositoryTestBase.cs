@@ -11,8 +11,8 @@ namespace opm_validation_service.Tests.Peristence
         protected abstract IUserAccessRepository CreateRepository();
 
         private IUserAccessRepository _repository;
-        private readonly IUser _user = new User("userXYZ");
-        private readonly IUser _user2 = new User("userXYZ2");
+        private const string Username = "userXYZ";
+        private const string Username2 = "userXYZ2";
 
         [SetUp]
         public void Setup()
@@ -23,10 +23,10 @@ namespace opm_validation_service.Tests.Peristence
         [Test]
         public void GetAndRecordTest()
         {
-            Assert.AreEqual(0, _repository.GetUserAccessCount(_user, new TimeSpan(999, 0, 0)));
+            Assert.AreEqual(0, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
             for (int i = 0; i < 999; i++ ) {
-                _repository.RecordAccess(_user, new EanEicCode(""));
-                Assert.AreEqual(i + 1, _repository.GetUserAccessCount(_user, new TimeSpan(999, 0, 0)));
+                _repository.RecordAccess(Username, new EanEicCode(""));
+                Assert.AreEqual(i + 1, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
             }
         }
 
@@ -49,7 +49,7 @@ namespace opm_validation_service.Tests.Peristence
         {
             try
             {
-                _repository.RecordAccess(_user, null);
+                _repository.RecordAccess(Username, null);
             }
             catch (ArgumentException)
             {
@@ -61,10 +61,10 @@ namespace opm_validation_service.Tests.Peristence
         [Test]
         public void Get_Record_Returns_Zero_For_User_Without_Records()
         {
-            Assert.AreEqual(0, _repository.GetUserAccessCount(_user, new TimeSpan(999, 0, 0)));
-            _repository.RecordAccess(_user, new EanEicCode(""));
-            Assert.AreEqual(1, _repository.GetUserAccessCount(_user, new TimeSpan(999, 0, 0)));
-            Assert.AreEqual(0, _repository.GetUserAccessCount(_user2, new TimeSpan(999, 0, 0)));
+            Assert.AreEqual(0, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
+            _repository.RecordAccess(Username, new EanEicCode(""));
+            Assert.AreEqual(1, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
+            Assert.AreEqual(0, _repository.GetUserAccessCount(Username2, new TimeSpan(999, 0, 0)));
         }
 
     }

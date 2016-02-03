@@ -17,10 +17,10 @@ namespace opm_validation_service.Services
         private readonly TimeSpan _timeWindow;
         private readonly int _maxAccessCount;
 
-        public bool TryAccess(IUser user, EanEicCode code)
+        public bool TryAccess(string username, EanEicCode code)
         {
-            int accessCount = _userAccessRepository.GetUserAccessCount(user, _timeWindow);
-            _userAccessRepository.RecordAccess(user, code);
+            int accessCount = _userAccessRepository.GetUserAccessCount(username, _timeWindow);
+            _userAccessRepository.RecordAccess(username, code);
 
             return accessCount < _maxAccessCount;
         }
