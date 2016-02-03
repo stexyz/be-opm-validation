@@ -21,8 +21,9 @@ namespace opm_validation_service.Persistence
             if (user == null) {
                 throw new ArgumentException("User cannot be null.");
             }
-            
-            IQueryable<tbl_user_access_log> dbUserAccessRecords = _dbContext.tbl_user_access_log.Where(l => l.tdo_user_id.Equals(user.Id));
+            DateTime beginningOfTimeWindow = DateTime.UtcNow.Subtract(timeWindow);
+            IQueryable<tbl_user_access_log> dbUserAccessRecords = _dbContext.tbl_user_access_log.Where(l => l.tdo_user_id.Equals(user.Id) &&
+                                                                                                            l.tdo_access_time > beginningOfTimeWindow);
             return dbUserAccessRecords.Count();
         }
 
