@@ -12,6 +12,8 @@ namespace opm_validation_service.Services {
         /// <returns>True if there is some limit left. False otherwise.</returns>
         bool TryAccess(string username, EanEicCode code);
 
+        void RecordAccess(string username, string code, string result);
+
         //TODO SP:
         // string GetAccessLogs();
         // string GetAccessLogs(IUser user);

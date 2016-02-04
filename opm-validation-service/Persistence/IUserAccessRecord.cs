@@ -7,6 +7,6 @@ namespace opm_validation_service.Persistence
     {
         string UserId { get; }
         DateTime AccessTime { get;  }
-        EanEicCode Code { get; }
+        string Code { get; }
     }
 }

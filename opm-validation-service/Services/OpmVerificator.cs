@@ -22,20 +22,20 @@ namespace opm_validation_service.Services {
         public IOpmRepository OpmRepository { private get; set; }
         public IUserAccessService UserAccessService { private get; set; }
 
-        public OpmVerificationResult VerifyOpmWithToken(string codeString, string token) {
+        public OpmVerificationResult VerifyOpmWithToken(string codeString, string token, out string username) {
             if (!IdentityManagement.ValidateUser(token)) {
                 throw new UnauthorizedAccessException();
             }
-            string userInfo = IdentityManagement.GetUsername(token);
-
-            return VerifyOpm(codeString, userInfo);
+            username = IdentityManagement.GetUsername(token); 
+            return VerifyOpm(codeString, username);
         }
 
         public OpmVerificationResult VerifyOpm(string codeString, string username)
         {
             EanEicCode code = new EanEicCode(codeString);
             if (UserAccessService.TryAccess(username, code)) {
-                return VerifyOpm(code);
+                OpmVerificationResult result =  VerifyOpm(code);
+                return result;
             }
 
             throw new UserAccessLimitViolationException();

@@ -44,7 +44,7 @@ namespace opm_validation_service.Tests.Controllers
             IOpmVerificator opmVerificator = new OpmVerificator(identityManagement, mockClient.Object, OpmRepository,
                                                                 userAccessService);
 
-            Controller = new OpmDuplicityController(opmVerificator)
+            Controller = new OpmDuplicityController(opmVerificator, userAccessService)
                 {
                     Request = new HttpRequestMessage(),
                     Configuration = new HttpConfiguration()

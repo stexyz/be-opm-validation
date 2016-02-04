@@ -32,7 +32,7 @@ namespace opm_validation_service.Tests.Controllers
                                                                 OpmRepository,
                                                                 userAccessService);
 
-            Controller = new OpmDuplicityController(opmVerificator)
+            Controller = new OpmDuplicityController(opmVerificator, userAccessService)
                 {
                     Request = new HttpRequestMessage(),
                     Configuration = new HttpConfiguration()

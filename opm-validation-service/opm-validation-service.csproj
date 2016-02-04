@@ -145,6 +145,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="CheckResultDescriptions.Designer.cs" />
+    <Compile Include="Controllers\AbstractOpmDuplicityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpmDuplicityCredentialsController.cs" />
     <Compile Include="Controllers\OpmDuplicityController.cs" />

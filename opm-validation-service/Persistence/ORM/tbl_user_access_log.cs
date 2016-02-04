@@ -18,5 +18,6 @@ namespace opm_validation_service.Persistence.ORM
         public string tdo_user_id { get; set; }
         public System.DateTime tdo_access_time { get; set; }
         public string tdo_ean { get; set; }
+        public string tdo_validation_result { get; set; }
     }
 }

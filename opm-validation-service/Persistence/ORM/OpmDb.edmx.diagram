@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="cfd68fa0337340d29430c73924da51b4" Name="Diagram1">
         <EntityTypeShape EntityType="OpmModel.tbl_duplicate_opms" Width="2.375" PointX="0.875" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpmModel.tbl_user_access_log" Width="1.5" PointX="6.375" PointY="1" />
+        <EntityTypeShape EntityType="OpmModel.tbl_user_access_log" Width="2.125" PointX="5.75" PointY="1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

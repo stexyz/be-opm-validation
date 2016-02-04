@@ -20,9 +20,14 @@ namespace opm_validation_service.Services
         public bool TryAccess(string username, EanEicCode code)
         {
             int accessCount = _userAccessRepository.GetUserAccessCount(username, _timeWindow);
-            _userAccessRepository.RecordAccess(username, code);
+//            _userAccessRepository.RecordAccess(username, code);
 
             return accessCount < _maxAccessCount;
+        }
+
+        public void RecordAccess(string username, string code, string result)
+        {
+            _userAccessRepository.RecordAccess(username, code, result);
         }
     }
 }

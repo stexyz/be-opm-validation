@@ -1,7 +1,6 @@
-﻿using System;
+﻿using opm_validation_service.Persistence.ORM;
+using System;
 using System.Linq;
-using opm_validation_service.Models;
-using opm_validation_service.Persistence.ORM;
 
 namespace opm_validation_service.Persistence
 {
@@ -27,7 +26,7 @@ namespace opm_validation_service.Persistence
             return dbUserAccessRecords.Count();
         }
 
-        public void RecordAccess(string username, EanEicCode code)
+        public void RecordAccess(string username, string code, string result)
         {
             if (username == null) {
                 throw new ArgumentException("User cannot be null.");
@@ -39,8 +38,9 @@ namespace opm_validation_service.Persistence
             tbl_user_access_log newRecord = new tbl_user_access_log
                 {
                     tdo_user_id = username,
-                    tdo_ean = code.Code,
-                    tdo_access_time = DateTime.UtcNow
+                    tdo_ean = code,
+                    tdo_access_time = DateTime.UtcNow,
+                    tdo_validation_result = result
                 };
 
             _dbContext.tbl_user_access_log.Add(newRecord);

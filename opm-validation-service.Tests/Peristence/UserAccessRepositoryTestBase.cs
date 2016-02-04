@@ -25,7 +25,7 @@ namespace opm_validation_service.Tests.Peristence
         {
             Assert.AreEqual(0, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
             for (int i = 0; i < 999; i++ ) {
-                _repository.RecordAccess(Username, new EanEicCode(""));
+                _repository.RecordAccess(Username, "", "");
                 Assert.AreEqual(i + 1, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
             }
         }
@@ -35,7 +35,7 @@ namespace opm_validation_service.Tests.Peristence
         {
             try
             {
-                _repository.RecordAccess(null, new EanEicCode(""));
+                _repository.RecordAccess(null, "", "");
             }
             catch (ArgumentException)
             {
@@ -49,7 +49,7 @@ namespace opm_validation_service.Tests.Peristence
         {
             try
             {
-                _repository.RecordAccess(Username, null);
+                _repository.RecordAccess(Username, null, "");
             }
             catch (ArgumentException)
             {
@@ -62,7 +62,7 @@ namespace opm_validation_service.Tests.Peristence
         public void Get_Record_Returns_Zero_For_User_Without_Records()
         {
             Assert.AreEqual(0, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
-            _repository.RecordAccess(Username, new EanEicCode(""));
+            _repository.RecordAccess(Username, "", "");
             Assert.AreEqual(1, _repository.GetUserAccessCount(Username, new TimeSpan(999, 0, 0)));
             Assert.AreEqual(0, _repository.GetUserAccessCount(Username2, new TimeSpan(999, 0, 0)));
         }

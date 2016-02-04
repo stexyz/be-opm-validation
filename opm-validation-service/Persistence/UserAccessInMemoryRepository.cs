@@ -22,7 +22,7 @@ namespace opm_validation_service.Persistence
             return result;
         }
 
-        public void RecordAccess(string username, EanEicCode code)
+        public void RecordAccess(string username, string code, string result)
         {
             if (username == null)
             {
@@ -36,7 +36,7 @@ namespace opm_validation_service.Persistence
             {
                 store[username] = new List<IUserAccessRecord>();
             }
-            store[username].Add(new UserAccessRecord(username, DateTime.Now, code));
+            store[username].Add(new UserAccessRecord(username, DateTime.Now, code, result));
         }
     }
 }

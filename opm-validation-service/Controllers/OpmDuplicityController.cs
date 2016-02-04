@@ -18,7 +18,7 @@ namespace opm_validation_service.Controllers
         /// </summary>
         private readonly string _ssoCookieName = System.Configuration.ConfigurationManager.AppSettings["ssoCookieName"];
 
-        public OpmDuplicityController(IOpmVerificator opmVerificator) : base(opmVerificator)
+        public OpmDuplicityController(IOpmVerificator opmVerificator, IUserAccessService userAccessService) : base(opmVerificator, userAccessService)
         {
         }
         
@@ -33,20 +33,20 @@ namespace opm_validation_service.Controllers
         }
 
         public OpmVerificationResult Get(String id, String token) {
+            string username = null;
             try
             {
-                return _opmVerificator.VerifyOpmWithToken(id, token);
-            }
-            catch (UnauthorizedAccessException)
-            {
+                OpmVerificationResult result = _opmVerificator.VerifyOpmWithToken(id, token, out username);
+                _userAccessService.RecordAccess(username, id, result.Result.ToString());
+                return result;
+            } catch (UnauthorizedAccessException) {
+                _userAccessService.RecordAccess(username, id, "Unauthorized.");
                 ThrowHttpResponseException(HttpStatusCode.Unauthorized, "Access denied due to an invalid token.");
-            }
-            catch (UserAccessLimitViolationException)
-            {
+            } catch (UserAccessLimitViolationException) {
+                _userAccessService.RecordAccess(username, id, "Access limitation violation.");
                 ThrowHttpResponseException(HttpStatusCode.Forbidden, "Access denied due to access limit violation.");
-            }
-            catch (EanEicCodeInvalidException)
-            {
+            } catch (EanEicCodeInvalidException) {
+                _userAccessService.RecordAccess(username, id, "Invalid code.");
                 ThrowHttpResponseException(HttpStatusCode.BadRequest, "The supplied code is not valid.");
             }
             // this return statement is required by compiler; prefer to have it here rather than inline the ThrowHttpResponseException method
