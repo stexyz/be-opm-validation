@@ -23,9 +23,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="tdo_user_id" Type="nchar" Nullable="false" MaxLength="40" />
+          <Property Name="tdo_user_id" Type="nchar" MaxLength="40" />
           <Property Name="tdo_access_time" Type="datetime" Nullable="false" />
-          <Property Name="tdo_ean" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="tdo_ean" Type="varchar" MaxLength="50" />
           <Property Name="tdo_validation_result" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
       </Schema></edmx:StorageModels>
@@ -50,9 +50,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="tdo_user_id" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Type="String" Name="tdo_user_id" MaxLength="40" FixedLength="true" Unicode="true" />
           <Property Type="DateTime" Name="tdo_access_time" Precision="3" Nullable="false" />
-          <Property Type="String" Name="tdo_ean" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="tdo_ean" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="tdo_validation_result" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
