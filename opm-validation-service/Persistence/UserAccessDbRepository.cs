@@ -28,9 +28,6 @@ namespace opm_validation_service.Persistence
 
         public void RecordAccess(string username, string code, string result)
         {
-            if (username == null) {
-                throw new ArgumentException("User cannot be null.");
-            }
             if (code == null) {
                 throw new ArgumentException("Code cannot be null.");
             }
