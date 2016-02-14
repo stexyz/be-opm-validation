@@ -10,6 +10,9 @@ using opm_validation_service.Services;
 
 namespace opm_validation_service.Controllers
 {
+    /// <summary>
+    /// Test help.
+    /// </summary>
     public class OpmDuplicityController : AbstractOpmDuplicityController
     {
         /// <summary>
@@ -22,6 +25,11 @@ namespace opm_validation_service.Controllers
         {
         }
         
+        /// <summary>
+        /// Test help for get.
+        /// </summary>
+        /// <param name="id">id param</param>
+        /// <returns>returns some result..</returns>
         public OpmVerificationResult Get(String id)
         {
             CookieHeaderValue token = Request.Headers.GetCookies(_ssoCookieName).FirstOrDefault();

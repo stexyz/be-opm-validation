@@ -29,6 +29,7 @@ namespace opm_validation_service {
             if (recreateDatabase)
             {
                 DbRepositoryUtil.RecreateDatabase();
+                //TODO SP: move sample data to AppData
                 String pathToSampleData = HttpContext.Current.Server.MapPath("~/Persistence/OpmRepoSampleData.csv");
                 DbRepositoryUtil.FillSampleOpm(pathToSampleData);
             }

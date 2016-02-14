@@ -462,11 +462,23 @@
               Looks up a localized string similar to No code supplied..
             </summary>
         </member>
+        <member name="T:opm_validation_service.Controllers.OpmDuplicityController">
+            <summary>
+            Test help.
+            </summary>
+        </member>
         <member name="F:opm_validation_service.Controllers.OpmDuplicityController._ssoCookieName">
             <summary>
             TODO SP: 
             1) expose https endpoint (configurable in Web.config)
             </summary>
+        </member>
+        <member name="M:opm_validation_service.Controllers.OpmDuplicityController.Get(System.String)">
+            <summary>
+            Test help for get.
+            </summary>
+            <param name="id">id param</param>
+            <returns>returns some result..</returns>
         </member>
         <member name="T:opm_validation_service.Persistence.UserAccessDbRepository">
             <summary>
