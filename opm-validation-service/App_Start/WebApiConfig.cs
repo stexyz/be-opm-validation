@@ -27,6 +27,8 @@ namespace opm_validation_service {
 
             bool recreateDatabase = Boolean.Parse(System.Configuration.ConfigurationManager.AppSettings["RecreateDatabase"]);
 
+            _log.Info("DB settings:" + DbRepositoryUtil.GetDbInfo());
+
             if (recreateDatabase)
             {
                 _log.Info("DB recreate started.");

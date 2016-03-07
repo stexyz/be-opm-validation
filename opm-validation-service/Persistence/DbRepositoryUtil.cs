@@ -1,4 +1,5 @@
-﻿using opm_validation_service.Persistence.ORM;
+﻿using System.Text;
+using opm_validation_service.Persistence.ORM;
 
 namespace opm_validation_service.Persistence
 {
@@ -23,6 +24,12 @@ namespace opm_validation_service.Persistence
         {
             IOpmRepository repo = new OpmDbRepository();
             OpmRepoFiller.Fill(repo, path);
+        }
+
+        public static string GetDbInfo()
+        {
+            BE_Opm context = new BE_Opm();
+            return string.Format("Database:{0}, Data source:{1}.", context.Database.Connection.Database, context.Database.Connection.DataSource);
         }
     }
 }
