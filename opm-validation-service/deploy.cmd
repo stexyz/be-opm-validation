@@ -1,0 +1,10 @@
+msbuild /P:Configuration=DCAP-A ^
+/P:DeployOnBuild=True ^
+/P:DeployTarget=MSDeployPublish ^
+/P:MsDeployServiceUrl=https://192.168.88.190:8172/MsDeploy.axd ^
+/P:AllowUntrustedCertificate=True ^
+/P:MSDeployPublishMethod=WMSvc ^
+/P:CreatePackageOnPublish=True ^
+/P:UserName=BOHEMIAENERGY\spacinda ^
+/P:DeployIISAppPath=OpmVerificationTC ^
+/P:Password="t7Lb;E*G"
