@@ -31,17 +31,9 @@ namespace opm_validation_service.Tests.Peristence
         }
 
         [Test]
-        public void RecordNullUser()
+        public void RecordNullUserPasses()
         {
-            try
-            {
-                _repository.RecordAccess(null, "", "");
-            }
-            catch (ArgumentException)
-            {
-                return;
-            }
-            Assert.Fail("Expected argument exception");
+            _repository.RecordAccess(null, "", "");
         }
 
         [Test]

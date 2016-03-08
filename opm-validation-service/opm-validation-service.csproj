@@ -175,16 +175,19 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OpmDb.Context.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Persistence\ORM\OpmDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OpmDb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Persistence\ORM\OpmDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OpmDb.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Models\OpmVerificationResult.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +198,7 @@
     <Compile Include="Models\Opm.cs" />
     <Compile Include="Persistence\ORM\tbl_duplicate_opms.cs">
       <DependentUpon>OpmDb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Persistence\OpmDbRepository.cs" />
     <Compile Include="Persistence\OpmRepoFiller.cs" />
@@ -202,12 +206,14 @@
     <Compile Include="Exceptions\UserAccessLimitViolationException.cs" />
     <Compile Include="Persistence\ORM\tbl_user_access_log.cs">
       <DependentUpon>OpmDb.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Persistence\UserAccessRecord.cs" />
     <Compile Include="Services\UserAccessService.cs" />
     <EntityDeploy Include="Persistence\ORM\OpmDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OpmDb.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EntityDeploy>
     <Content Include="App_Data\XmlDocument.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -216,14 +222,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OpmDb.edmx</DependentUpon>
       <LastGenOutput>OpmDb.Context.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\ORM\OpmDb.edmx.diagram">
       <DependentUpon>OpmDb.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\ORM\OpmDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OpmDb.edmx</DependentUpon>
       <LastGenOutput>OpmDb.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\OpmRepoSampleData.csv" />
     <Compile Include="Properties\AssemblyInfo.cs" />
