@@ -2,7 +2,13 @@
 {
     public class OpmVerificationResult
     {
-        public bool Result { get; private set; }
+        public bool Result { get; set; }
+
+        //Only for (de)serialization purpuse
+        public OpmVerificationResult()
+        {
+        }
+
         public OpmVerificationResult(bool result)
         {
             Result = result;

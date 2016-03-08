@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opm-validation-service", "o
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opm-validation-service.Tests", "opm-validation-service.Tests\opm-validation-service.Tests.csproj", "{DF23262D-12CC-4157-9218-81FBBB93CE6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		DCAP-A|Any CPU = DCAP-A|Any CPU
@@ -24,6 +26,12 @@ Global
 		{DF23262D-12CC-4157-9218-81FBBB93CE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF23262D-12CC-4157-9218-81FBBB93CE6F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF23262D-12CC-4157-9218-81FBBB93CE6F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.DCAP-A|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.DCAP-A|Any CPU.Build.0 = Debug|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
