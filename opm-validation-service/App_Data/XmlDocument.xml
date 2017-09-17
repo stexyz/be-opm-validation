@@ -194,6 +194,21 @@
             Initializes a new instance of the <see cref="T:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator"/> class.
             </summary>
         </member>
+        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
         <member name="M:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
             <summary>
             Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
@@ -257,21 +272,6 @@
             <param name="type">The type.</param>
             <param name="mediaType">Type of the media.</param>
             <returns></returns>
-        </member>
-        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
-            <summary>
-            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
-            </summary>
-        </member>
-        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
-            <summary>
-            Gets the objects that are used directly as samples for certain actions.
-            </summary>
-        </member>
-        <member name="P:opm_validation_service.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
-            <summary>
-            Gets the objects that are serialized as samples by the supported formatters.
-            </summary>
         </member>
         <member name="T:opm_validation_service.Areas.HelpPage.HelpPageSampleKey">
             <summary>
@@ -500,15 +500,6 @@
             <param name="opm">Opm to add.</param>
             <returns>True if addition had suceeded.</returns>
         </member>
-        <member name="M:opm_validation_service.Services.IUserAccessService.TryAccess(System.String,opm_validation_service.Models.EanEicCode)">
-            <summary>
-            Synchronized method. Tries to access resource. If successful, the internal counter gets increased.
-            This service also maintains access logs.
-            </summary>
-            <param name="username">User</param>
-            <param name="code"></param>
-            <returns>True if there is some limit left. False otherwise.</returns>
-        </member>
         <member name="M:opm_validation_service.Services.IIdentityManagement.ValidateUser(System.String)">
             <summary>
             Queries IDM (OpenSSO) to find out if the token is not expired (and known to the system).
@@ -530,6 +521,15 @@
             <param name="userName">username</param>
             <param name="password">password</param>
             <returns>Token.</returns>
+        </member>
+        <member name="M:opm_validation_service.Services.IUserAccessService.TryAccess(System.String,opm_validation_service.Models.EanEicCode)">
+            <summary>
+            Synchronized method. Tries to access resource. If successful, the internal counter gets increased.
+            This service also maintains access logs.
+            </summary>
+            <param name="username">User</param>
+            <param name="code"></param>
+            <returns>True if there is some limit left. False otherwise.</returns>
         </member>
     </members>
 </doc>

@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opm-validation-service", "opm-validation-service\opm-validation-service.csproj", "{52F89F94-1E6C-4CAF-BD27-7B2354D0FDAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opm-validation-service.Tests", "opm-validation-service.Tests\opm-validation-service.Tests.csproj", "{DF23262D-12CC-4157-9218-81FBBB93CE6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "business-opportunity", "business-opportunity\business-opportunity.csproj", "{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "business-opportunity.Tests", "business-opportunity.Tests\business-opportunity.Tests.csproj", "{9F60A31F-BB9F-4146-9992-43AF81CC3303}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +38,18 @@ Global
 		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95D2EB16-F165-4D64-AEAA-EADA2F9397AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.DCAP-A|Any CPU.ActiveCfg = Debug|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.DCAP-A|Any CPU.Build.0 = Debug|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.DCAP-A|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.DCAP-A|Any CPU.Build.0 = Debug|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F60A31F-BB9F-4146-9992-43AF81CC3303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
