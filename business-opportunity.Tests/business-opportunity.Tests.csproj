@@ -52,7 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\busines-opportunity\business-opportunity.csproj">
+    <ProjectReference Include="..\business-opportunity\business-opportunity.csproj">
       <Project>{0674A62B-2EFB-45D9-BE0C-BB3383E3F665}</Project>
       <Name>business-opportunity</Name>
     </ProjectReference>
