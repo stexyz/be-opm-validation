@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
+using opm_validation_service;
 
 namespace business_opportunity
 {
@@ -12,8 +14,10 @@ namespace business_opportunity
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
